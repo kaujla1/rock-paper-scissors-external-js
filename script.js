@@ -5,14 +5,6 @@ function getComputerChoice() {
   return computerChoice;
 }
 
-/*prompt the player to make a choice*/
-function playerSelectionPrompt() {
-  let playerPrompt = prompt("Please choose Rock, Paper, or Scissors")
-  selectionFirstLetter = playerPrompt.slice(0, 1);
-  selectionRest = playerPrompt.slice(1);
-  return selectionFirstLetter.toUpperCase() + selectionRest.toLowerCase();
-}
-
 /*Connect to body div*/
 const body = document.querySelector('body');
 
@@ -57,7 +49,6 @@ function playRound(playerSelection, computerSelection) {
     resultsDiv.textContent = result;
   }
   keepScore();
-  calculateGameResult();
 }
 
 /*keep track of players' scores after each round*/
@@ -81,6 +72,7 @@ function keepScore() {
   } else if (result === "You lose. Paper beats Rock." || result === "You lose. Scissors beat Paper." || result === "You lose. Rock beats Scissors.") {
     computerScore.textContent = Number(computerScore.textContent) + 1;
   }
+  calculateGameResult(); //not sure this needs to be here, you could probably pull it out to the global level and it would still work as intended? 
 }
 
 /*calculate the results after all 5 rounds are finished*/
@@ -91,27 +83,52 @@ body.insertBefore(gameResult, resultsDiv); //move this once finished
 function calculateGameResult() {
   if (playerScore.textContent === "5" && computerScore.textContent === "5") {
     gameResult.textContent = "Game result: it's a tie game!";
-    //remove event listener
+    stopGameplay();
   } else if (playerScore.textContent === "5") {
     gameResult.textContent = "Game result: you win!";
     resultsDiv.textContent = "";
-    //remove event listener
+    stopGameplay();
   } else if (computerScore.textContent === "5") {
-    gameResult.textContent = "Game result. you lose.";
+    gameResult.textContent = "Game result: you lose.";
     resultsDiv.textContent = "";
-    //remove event listener
+    stopGameplay();
   }
 }
 
-/*Enable gameplay with buttons*/
+/*Enable gameplay with buttons
+const rockButton = document.querySelector(".rock");
+const paperButton = document.querySelector(".paper");
+const scissorsButton = document.querySelector(".scissors");
+
+function playRoundRock() {playRound(rockButton.className,getComputerChoice());}
+function playRoundPaper() {playRound(rockButton.className,getComputerChoice());}
+function playRoundScissors() {playRound(rockButton.className,getComputerChoice());}
+
+rockButton.addEventListener("click", playRoundRock);
+paperButton.addEventListener("click", playRoundPaper);
+scissorsButton.addEventListener("click", playRoundScissors);*/
+
+/*Disable gameplay buttons
+function stopGameplay() {
+  rockButton.removeEventListener("click", playRoundRock);
+  paperButton.removeEventListener("click", playRoundPaper);
+  scissorsButton.removeEventListener("click", playRoundScissors);
+}*/
+
+/*
 const choiceButtons = document.querySelectorAll(".choices button");
 
 choiceButtons.forEach((button) => {
   button.addEventListener("click", () => {
     playRound(button.className, getComputerChoice())
   });
-});
+});*/
 
+const choiceButtons = document.querySelectorAll(".choices button");
+
+choiceButtons.forEach((button) => {
+  button.addEventListener("click", playRound(button.className, getComputerChoice()))
+});
 
 // give this error: Uncaught TypeError: Failed to execute 'addEventListener' on 'EventTarget': parameter 2 is not of type 'Object'.
 /*
@@ -131,8 +148,5 @@ choiceButtons.forEach((button) => {
 
 //1. keep track of score DONE
 //2. use DOM methods to show the player and computer scores on screen DONE
-//3. once someone's score hits 5, display game results, stop user from being able to play (remove event listeners from the rps buttons), and have a "play again" button appear 
+//3. once someone's score hits 5, display game results (DONE), stop user from being able to play (remove event listeners from the rps buttons), and have a "play again" button appear 
 //4. if user hits the "play again" button, the game resets (add back the event listeners to the rps buttons)
-
-
-// play again
