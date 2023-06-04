@@ -20,35 +20,37 @@ body.insertBefore(resultsDiv, choiceDiv); //CHANGE THIS when you're finishing so
 let result;
 
 function playRound(playerSelection, computerSelection) {
-  if (playerSelection === "rock" && computerSelection === "Scissors") {
-    result = "You win! Rock beats Scissors.";
-    resultsDiv.textContent = result; /*not sure if I need a return before all of these?*/
-  } else if (playerSelection === "rock" && computerSelection === "Paper") {
-    result = "You lose. Paper beats Rock.";
-    resultsDiv.textContent = result;
-  } else if (playerSelection === "rock" && computerSelection === "Rock") {
-    result = "It's a tie! You both chose rock.";
-    resultsDiv.textContent = result;
-  } else if (playerSelection === "paper" && computerSelection === "Rock") {
-    result = "You win! Paper beats Rock.";
-    resultsDiv.textContent = result;
-  } else if (playerSelection === "paper" && computerSelection === "Scissors") {
-    result = "You lose. Scissors beat Paper.";
-    resultsDiv.textContent = result;
-  } else if (playerSelection === "paper" && computerSelection === "Paper") {
-    result = "It's a tie! You both chose Paper.";
-    resultsDiv.textContent = result;
-  } else if (playerSelection === "scissors" && computerSelection === "Paper") {
-    result = "You win! Scissors beat Paper.";
-    resultsDiv.textContent = result;
-  } else if (playerSelection === "scissors" && computerSelection === "Rock") {
-    result = "You lose. Rock beats Scissors.";
-    resultsDiv.textContent = result;
-  } else if (playerSelection === "scissors" && computerSelection === "Scissors") {
-    result = "It's a tie! You both chose Scissors.";
-    resultsDiv.textContent = result;
+  if (playerScore.textContent < "5" && computerScore.textContent < "5") { //Makes it so users can't play once someone hits 5 points
+    if (playerSelection === "rock" && computerSelection === "Scissors") {
+      result = "You win! Rock beats Scissors.";
+      resultsDiv.textContent = result; /*not sure if I need a return before all of these?*/
+    } else if (playerSelection === "rock" && computerSelection === "Paper") {
+      result = "You lose. Paper beats Rock.";
+      resultsDiv.textContent = result;
+    } else if (playerSelection === "rock" && computerSelection === "Rock") {
+      result = "It's a tie! You both chose rock.";
+      resultsDiv.textContent = result;
+    } else if (playerSelection === "paper" && computerSelection === "Rock") {
+      result = "You win! Paper beats Rock.";
+      resultsDiv.textContent = result;
+    } else if (playerSelection === "paper" && computerSelection === "Scissors") {
+      result = "You lose. Scissors beat Paper.";
+      resultsDiv.textContent = result;
+    } else if (playerSelection === "paper" && computerSelection === "Paper") {
+      result = "It's a tie! You both chose Paper.";
+      resultsDiv.textContent = result;
+    } else if (playerSelection === "scissors" && computerSelection === "Paper") {
+      result = "You win! Scissors beat Paper.";
+      resultsDiv.textContent = result;
+    } else if (playerSelection === "scissors" && computerSelection === "Rock") {
+      result = "You lose. Rock beats Scissors.";
+      resultsDiv.textContent = result;
+    } else if (playerSelection === "scissors" && computerSelection === "Scissors") {
+      result = "It's a tie! You both chose Scissors.";
+      resultsDiv.textContent = result;
+    }
+    keepScore();
   }
-  keepScore();
 }
 
 /*keep track of players' scores after each round*/
@@ -81,21 +83,34 @@ gameResult.classList.add("game-result");
 body.insertBefore(gameResult, resultsDiv); //move this once finished
 
 function calculateGameResult() {
-  if (playerScore.textContent === "5" && computerScore.textContent === "5") {
+  if /*(playerScore.textContent === "5" && computerScore.textContent === "5") {
     gameResult.textContent = "Game result: it's a tie game!";
     stopGameplay();
-  } else if (playerScore.textContent === "5") {
+  } else if*/ (playerScore.textContent === "5") {
     gameResult.textContent = "Game result: you win!";
     resultsDiv.textContent = "";
-    stopGameplay();
+    //stopGameplay(); not needed unless using individual event listeners
   } else if (computerScore.textContent === "5") {
     gameResult.textContent = "Game result: you lose.";
     resultsDiv.textContent = "";
-    stopGameplay();
+    //stopGameplay(); not needed unless using individual event listeners
   }
 }
 
-/*Enable gameplay with buttons
+const choiceButtons = document.querySelectorAll(".choices button");
+
+choiceButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    playRound(button.className, getComputerChoice())
+  });
+});
+
+
+
+//TRY TO USE A CONDITION TO ENABLE/DISABLE USERS FROM BEING ABLE TO PLAY?
+
+
+/*Enable gameplay with buttons individually 
 const rockButton = document.querySelector(".rock");
 const paperButton = document.querySelector(".paper");
 const scissorsButton = document.querySelector(".scissors");
@@ -115,38 +130,10 @@ function stopGameplay() {
   scissorsButton.removeEventListener("click", playRoundScissors);
 }*/
 
-/*
-const choiceButtons = document.querySelectorAll(".choices button");
-
-choiceButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    playRound(button.className, getComputerChoice())
-  });
-});*/
-
-const choiceButtons = document.querySelectorAll(".choices button");
-
-choiceButtons.forEach((button) => {
-  button.addEventListener("click", playRound(button.className, getComputerChoice()))
-});
-
-// give this error: Uncaught TypeError: Failed to execute 'addEventListener' on 'EventTarget': parameter 2 is not of type 'Object'.
-/*
-choiceButtons.forEach((button) => {
-  button.addEventListener("click", playRound(button.className, getComputerChoice())
-  );
-});*/
-
-//runs playRound as if each button's been pressed BEFORE they've been pressed?
-/*
-choiceButtons.forEach((button) => {
-  button.addEventListener("click", console.log(playRound(button.className, getComputerChoice())
-  ));
-});*/
 
 //Display the running score, and announce a winner of the game once one player reaches 5 points.
 
 //1. keep track of score DONE
 //2. use DOM methods to show the player and computer scores on screen DONE
-//3. once someone's score hits 5, display game results (DONE), stop user from being able to play (remove event listeners from the rps buttons), and have a "play again" button appear 
+//3. once someone's score hits 5, display game results (DONE), stop user from being able to play (remove event listeners from the rps buttons) (DONE), and have a "play again" button appear 
 //4. if user hits the "play again" button, the game resets (add back the event listeners to the rps buttons)
