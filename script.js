@@ -105,11 +105,6 @@ choiceButtons.forEach((button) => {
   });
 });
 
-
-
-//TRY TO USE A CONDITION TO ENABLE/DISABLE USERS FROM BEING ABLE TO PLAY?
-
-
 /*Enable gameplay with buttons individually 
 const rockButton = document.querySelector(".rock");
 const paperButton = document.querySelector(".paper");
