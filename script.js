@@ -83,17 +83,14 @@ gameResult.classList.add("game-result");
 body.insertBefore(gameResult, resultsDiv); //move this once finished
 
 function calculateGameResult() {
-  if /*(playerScore.textContent === "5" && computerScore.textContent === "5") {
-    gameResult.textContent = "Game result: it's a tie game!";
-    stopGameplay();
-  } else if*/ (playerScore.textContent === "5") {
+  if (playerScore.textContent === "5") {
     gameResult.textContent = "Game result: you win!";
     resultsDiv.textContent = "";
-    //stopGameplay(); not needed unless using individual event listeners
+    playAgain();
   } else if (computerScore.textContent === "5") {
     gameResult.textContent = "Game result: you lose.";
     resultsDiv.textContent = "";
-    //stopGameplay(); not needed unless using individual event listeners
+    playAgain();
   }
 }
 
@@ -105,30 +102,18 @@ choiceButtons.forEach((button) => {
   });
 });
 
-/*Enable gameplay with buttons individually 
-const rockButton = document.querySelector(".rock");
-const paperButton = document.querySelector(".paper");
-const scissorsButton = document.querySelector(".scissors");
+/*Play again*/
+const playAgainButton = document.createElement("button");
+playAgainButton.classList.add("play-again");
+playAgainButton.textContent = "Play Again";
 
-function playRoundRock() {playRound(rockButton.className,getComputerChoice());}
-function playRoundPaper() {playRound(rockButton.className,getComputerChoice());}
-function playRoundScissors() {playRound(rockButton.className,getComputerChoice());}
-
-rockButton.addEventListener("click", playRoundRock);
-paperButton.addEventListener("click", playRoundPaper);
-scissorsButton.addEventListener("click", playRoundScissors);*/
-
-/*Disable gameplay buttons
-function stopGameplay() {
-  rockButton.removeEventListener("click", playRoundRock);
-  paperButton.removeEventListener("click", playRoundPaper);
-  scissorsButton.removeEventListener("click", playRoundScissors);
-}*/
-
-
-//Display the running score, and announce a winner of the game once one player reaches 5 points.
-
-//1. keep track of score DONE
-//2. use DOM methods to show the player and computer scores on screen DONE
-//3. once someone's score hits 5, display game results (DONE), stop user from being able to play (remove event listeners from the rps buttons) (DONE), and have a "play again" button appear 
-//4. if user hits the "play again" button, the game resets (add back the event listeners to the rps buttons)
+function playAgain() {
+  playAgainButton.style.visibility = "visible";
+  body.appendChild(playAgainButton);
+  playAgainButton.addEventListener("click", () => {
+    playerScore.textContent = 0;
+    computerScore.textContent = 0;
+    playAgainButton.style.visibility = "hidden";
+    gameResult.textContent = "";
+  })
+}
