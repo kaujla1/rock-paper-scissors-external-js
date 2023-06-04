@@ -4,47 +4,129 @@
 This is a duplicate of my original rock-paper-scissors game but with the js stored in an external file. 
 
 ## Code to enable 5 rounds 
+/*generate a random choice for the computer*/
+function getComputerChoice() {
+  let computerOptions = ["Rock", "Paper", "Scissors"];
+  let computerChoice = computerOptions[Math.floor(Math.random() * computerOptions.length)];
+  return computerChoice;
+}
 
-/*note, the test from step 5 doesn't work but console.log(playRound(playerSelectionPrompt(), getComputerChoice())); does work?*/
+/*Connect to body div*/
+const body = document.querySelector('body');
 
-/*playRound(playerSelectionPrompt(), getComputerChoice()); this will run the game, but not display the win/lose/tie result unless you wrap it in a console.log. However, if I run that without the console.log in the actual browser console, then it will show the win/lose/tie result. Not sure why there's a difference?*/
+/*Connect to choices div*/
+const choiceDiv = document.querySelector(".choices");
 
-/*play an entire 5 round game, then return the overall win/lose/tie result*/
+/*Create DOM results div*/
+const resultsDiv = document.createElement("div");
+resultsDiv.classList.add("results");
+body.insertBefore(resultsDiv, choiceDiv); //CHANGE THIS when you're finishing so that the resultsDiv is appended somewhere else, not at the bottom of body. You might have to connect to another element to use it as a reference point. 
+
+/*play a single round of rock paper scissors and return the result of the round*/
 let result;
-      
-function game() {
-  for (let start = 0; start < 5; start++) {
-  result = playRound(playerSelectionPrompt(), getComputerChoice());
-  console.log(result);
-  keepScore();
+
+function playRound(playerSelection, computerSelection) {
+  if (playerScore.textContent < "5" && computerScore.textContent < "5") { //Makes it so users can't play once someone hits 5 points
+    if (playerSelection === "rock" && computerSelection === "Scissors") {
+      result = "You win! Rock beats Scissors.";
+      resultsDiv.textContent = result; /*not sure if I need a return before all of these?*/
+    } else if (playerSelection === "rock" && computerSelection === "Paper") {
+      result = "You lose. Paper beats Rock.";
+      resultsDiv.textContent = result;
+    } else if (playerSelection === "rock" && computerSelection === "Rock") {
+      result = "It's a tie! You both chose rock.";
+      resultsDiv.textContent = result;
+    } else if (playerSelection === "paper" && computerSelection === "Rock") {
+      result = "You win! Paper beats Rock.";
+      resultsDiv.textContent = result;
+    } else if (playerSelection === "paper" && computerSelection === "Scissors") {
+      result = "You lose. Scissors beat Paper.";
+      resultsDiv.textContent = result;
+    } else if (playerSelection === "paper" && computerSelection === "Paper") {
+      result = "It's a tie! You both chose Paper.";
+      resultsDiv.textContent = result;
+    } else if (playerSelection === "scissors" && computerSelection === "Paper") {
+      result = "You win! Scissors beat Paper.";
+      resultsDiv.textContent = result;
+    } else if (playerSelection === "scissors" && computerSelection === "Rock") {
+      result = "You lose. Rock beats Scissors.";
+      resultsDiv.textContent = result;
+    } else if (playerSelection === "scissors" && computerSelection === "Scissors") {
+      result = "It's a tie! You both chose Scissors.";
+      resultsDiv.textContent = result;
+    }
+    keepScore();
   }
-  console.log(gameResult());
 }
 
 /*keep track of players' scores after each round*/
-let playerScore = 0;
-let computerScore = 0;
-     
+const scoreboardPlayer = document.querySelector(".player"); 
+
+const playerScore = document.createElement("p");
+playerScore.classList.add("player-score");
+playerScore.textContent = 0;
+scoreboardPlayer.appendChild(playerScore);
+
+const scoreboardComputer = document.querySelector(".computer");
+
+const computerScore = document.createElement("p");
+computerScore.classList.add("computer-score")
+computerScore.textContent = 0; 
+scoreboardComputer.appendChild(computerScore);
+
 function keepScore() {
   if (result === "You win! Rock beats Scissors." || result === "You win! Paper beats Rock." || result === "You win! Scissors beat Paper.") {
-    playerScore = playerScore +1;
+    playerScore.textContent = Number(playerScore.textContent) + 1;
   } else if (result === "You lose. Paper beats Rock." || result === "You lose. Scissors beat Paper." || result === "You lose. Rock beats Scissors.") {
-    computerScore = computerScore +1;
-  } else if (result === "It's a tie! You both chose rock." || result === "It's a tie! You both chose Paper." || result === "It's a tie! You both chose Scissors.") {
-    playerScore = playerScore +1;
-    computerScore = computerScore +1;
+    computerScore.textContent = Number(computerScore.textContent) + 1;
   }
-} 
+  calculateGameResult(); //not sure this needs to be here, you could probably pull it out to the global level and it would still work as intended? 
+}
 
 /*calculate the results after all 5 rounds are finished*/
-function gameResult() {
-  if (playerScore > computerScore) {
-    return "Game result: you win!";
-  } else if (computerScore > playerScore) {
-    return "Game result: you lose.";
-  } else if (playerScore === computerScore) {
-    return "Game result: it's a tie!";
+const gameResult = document.createElement("p");
+gameResult.classList.add("game-result");
+body.insertBefore(gameResult, resultsDiv); //move this once finished
+
+function calculateGameResult() {
+  if /*(playerScore.textContent === "5" && computerScore.textContent === "5") {
+    gameResult.textContent = "Game result: it's a tie game!";
+    stopGameplay();
+  } else if*/ (playerScore.textContent === "5") {
+    gameResult.textContent = "Game result: you win!";
+    resultsDiv.textContent = "";
+    //stopGameplay(); not needed unless using individual event listeners
+  } else if (computerScore.textContent === "5") {
+    gameResult.textContent = "Game result: you lose.";
+    resultsDiv.textContent = "";
+    //stopGameplay(); not needed unless using individual event listeners
   }
 }
 
-game();
+const choiceButtons = document.querySelectorAll(".choices button");
+
+choiceButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    playRound(button.className, getComputerChoice())
+  });
+});
+
+/*Enable gameplay with buttons individually 
+const rockButton = document.querySelector(".rock");
+const paperButton = document.querySelector(".paper");
+const scissorsButton = document.querySelector(".scissors");
+
+function playRoundRock() {playRound(rockButton.className,getComputerChoice());}
+function playRoundPaper() {playRound(rockButton.className,getComputerChoice());}
+function playRoundScissors() {playRound(rockButton.className,getComputerChoice());}
+
+rockButton.addEventListener("click", playRoundRock);
+paperButton.addEventListener("click", playRoundPaper);
+scissorsButton.addEventListener("click", playRoundScissors);*/
+
+/*Disable gameplay buttons
+function stopGameplay() {
+  rockButton.removeEventListener("click", playRoundRock);
+  paperButton.removeEventListener("click", playRoundPaper);
+  scissorsButton.removeEventListener("click", playRoundScissors);
+}*/
