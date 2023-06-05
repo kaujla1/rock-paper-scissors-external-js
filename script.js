@@ -14,7 +14,7 @@ const choiceDiv = document.querySelector(".choices");
 /*Create DOM results div*/
 const resultsDiv = document.createElement("div");
 resultsDiv.classList.add("results");
-body.insertBefore(resultsDiv, choiceDiv); //CHANGE THIS when you're finishing so that the resultsDiv is appended somewhere else, not at the bottom of body. You might have to connect to another element to use it as a reference point. 
+body.insertBefore(resultsDiv, choiceDiv);  
 
 /*play a single round of rock paper scissors and return the result of the round*/
 let result;
@@ -23,7 +23,7 @@ function playRound(playerSelection, computerSelection) {
   if (playerScore.textContent < "5" && computerScore.textContent < "5") { //Makes it so users can't play once someone hits 5 points
     if (playerSelection === "rock" && computerSelection === "Scissors") {
       result = "You win! Rock beats Scissors.";
-      resultsDiv.textContent = result; /*not sure if I need a return before all of these?*/
+      resultsDiv.textContent = result; 
     } else if (playerSelection === "rock" && computerSelection === "Paper") {
       result = "You lose. Paper beats Rock.";
       resultsDiv.textContent = result;
@@ -74,13 +74,13 @@ function keepScore() {
   } else if (result === "You lose. Paper beats Rock." || result === "You lose. Scissors beat Paper." || result === "You lose. Rock beats Scissors.") {
     computerScore.textContent = Number(computerScore.textContent) + 1;
   }
-  calculateGameResult(); //not sure this needs to be here, you could probably pull it out to the global level and it would still work as intended? 
+  calculateGameResult();
 }
 
 /*calculate the results after all 5 rounds are finished*/
 const gameResult = document.createElement("p");
 gameResult.classList.add("game-result");
-body.insertBefore(gameResult, resultsDiv); //move this once finished
+body.insertBefore(gameResult, resultsDiv); //move this once finished?
 
 function calculateGameResult() {
   if (playerScore.textContent === "5") {
@@ -94,6 +94,7 @@ function calculateGameResult() {
   }
 }
 
+/*Connect to rps choice buttons*/
 const choiceButtons = document.querySelectorAll(".choices button");
 
 choiceButtons.forEach((button) => {
@@ -102,18 +103,18 @@ choiceButtons.forEach((button) => {
   });
 });
 
-/*Play again*/
+/*Add play again button*/
 const playAgainButton = document.createElement("button");
 playAgainButton.classList.add("play-again");
 playAgainButton.textContent = "Play Again";
 
 function playAgain() {
-  playAgainButton.style.visibility = "visible";
+  playAgainButton.style.visibility = "visible"; //necessary to have button "reappear" after it's been hidden
   body.appendChild(playAgainButton);
   playAgainButton.addEventListener("click", () => {
     playerScore.textContent = 0;
     computerScore.textContent = 0;
-    playAgainButton.style.visibility = "hidden";
+    playAgainButton.style.visibility = "hidden"; 
     gameResult.textContent = "";
   })
 }
