@@ -1,1 +1,60 @@
-Hi
+/*make the entire background black, all fonts white, and circular crop the rps images*/
+body {
+  background-color: white;
+}
+
+h1 {
+  font-size: 10vh;
+  text-align: center;
+}
+
+.scoreboard-outer {
+  display: flex;
+  justify-content: center;
+  margin: 20px; /*Change later*/ 
+}
+
+.scoreboard-inner {
+  border: 5px;
+  border-style: solid;
+  display: flex;
+}
+
+.player,
+.computer {
+  font-size: 3vh;
+  text-align: center;
+}
+
+.versus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.player-choice-img,
+.computer-choice-img {
+  height: 6.5vw;
+  width: 6.5vw;
+  border: 2px;
+  border-style: solid;
+  border-radius: 50%;
+}
+
+.choices {
+  display: flex;
+  justify-content: center;
+}
+
+.choices button {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.rock-img,
+.paper-img,
+.scissors-img {
+  height: auto; 
+  width: 5vw;
+}
