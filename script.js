@@ -1,3 +1,12 @@
+/*Click me animation*/
+const clickHere = document.querySelector(".click-here");
+clickHere.classList.add("bounce");
+
+clickHere.addEventListener("animationend", () => {
+  clickHere.classList.remove("bounce");
+  setTimeout(() => {clickHere.classList.add("bounce")}, 1000);
+});
+
 /*generate a random choice for the computer*/
 function getComputerChoice() {
   let computerOptions = ["rock", "paper", "scissors"];
@@ -49,6 +58,7 @@ function playRound(playerSelection, computerSelection) {
     keepScore();
     showPlayerChoice();
     showComputerChoice();
+    changeBorderColor();
   } 
 }
 
@@ -83,6 +93,20 @@ function showComputerChoice() {
     computerChoiceImg.src = "./rps-icons/scissors.png";
   }
   computerChoiceImgDiv.appendChild(computerChoiceImg);
+}
+
+/*Change color of choice image borders depending on winner*/ 
+function changeBorderColor() {
+  if (result.includes("win")) {
+    playerChoiceImgDiv.style.borderColor = "green";
+    computerChoiceImgDiv.style.borderColor = "red";
+  } else if (result.includes("lose")) {
+    playerChoiceImgDiv.style.borderColor = "red";
+    computerChoiceImgDiv.style.borderColor = "green";
+  } else {
+    playerChoiceImgDiv.style.borderColor = "yellow";
+    computerChoiceImgDiv.style.borderColor = "yellow";
+  }
 }
 
 /*keep track of players' scores after each round*/
@@ -124,7 +148,8 @@ const choiceButtons = document.querySelectorAll(".choices button");
 
 choiceButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    playRound(button.className, getComputerChoice())
+    clickHere.remove();
+    playRound(button.className, getComputerChoice());
   });
 });
 
@@ -140,6 +165,8 @@ playAgainButton.addEventListener("click", () => {
   computerChoiceImg.remove();
   resultsDiv.textContent = "";
   playAgainButton.style.visibility = "hidden"; //Note: using remove() here works fyi
+  playerChoiceImgDiv.style.borderColor = "white";
+  computerChoiceImgDiv.style.borderColor = "white";
 })
 
 function playAgain() {
