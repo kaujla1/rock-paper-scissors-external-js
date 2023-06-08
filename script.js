@@ -159,6 +159,11 @@ playAgainButton.classList.add("play-again");
 playAgainButton.textContent = "Play Again";
 
 playAgainButton.addEventListener("click", () => {
+  location.reload(); //new version simply reloads page
+})
+
+/*Old version reset everything manually
+playAgainButton.addEventListener("click", () => {
   playerScore.textContent = 0;
   computerScore.textContent = 0;
   playerChoiceImg.remove();
@@ -167,7 +172,7 @@ playAgainButton.addEventListener("click", () => {
   playAgainButton.style.visibility = "hidden"; //Note: using remove() here works fyi
   playerChoiceImgDiv.style.borderColor = "white";
   computerChoiceImgDiv.style.borderColor = "white";
-})
+})*/
 
 function playAgain() {
   playAgainButton.style.visibility = "visible"; //necessary to have button "reappear" after it's been hidden
