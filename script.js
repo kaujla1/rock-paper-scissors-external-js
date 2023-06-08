@@ -98,14 +98,14 @@ function showComputerChoice() {
 /*Change color of choice image borders depending on winner*/ 
 function changeBorderColor() {
   if (result.includes("win")) {
-    playerChoiceImgDiv.style.borderColor = "green";
-    computerChoiceImgDiv.style.borderColor = "red";
+    playerChoiceImgDiv.style.borderColor = "#4CC417";
+    computerChoiceImgDiv.style.borderColor = "#F62217";
   } else if (result.includes("lose")) {
-    playerChoiceImgDiv.style.borderColor = "red";
-    computerChoiceImgDiv.style.borderColor = "green";
+    playerChoiceImgDiv.style.borderColor = "#F62217";
+    computerChoiceImgDiv.style.borderColor = "#4CC417";
   } else {
-    playerChoiceImgDiv.style.borderColor = "yellow";
-    computerChoiceImgDiv.style.borderColor = "yellow";
+    playerChoiceImgDiv.style.borderColor = "#FFFF33";
+    computerChoiceImgDiv.style.borderColor = "#FFFF33";
   }
 }
 

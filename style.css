@@ -7,15 +7,16 @@ body {
 }
 
 h1 {
-  font-size: 6vh;
+  font-size: 1.75vw;
   color: white;
   text-align: center;
   margin-bottom: 10px;
 }
 
 .scoreboard-outer {
+  font-size: 1vw;
   color: white;
-  margin: 20px; /*Change later*/ 
+ 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,11 +34,11 @@ h1 {
 
 .player,
 .computer {
-  font-size: 3vh;
   text-align: center;
 }
 
 .versus {
+  font-size: 1vw;
   color: white;
   display: flex;
   justify-content: center;
@@ -60,7 +61,7 @@ h1 {
 .computer-choice-img-div {
   height: 6.5vw;
   width: 6.5vw;
-  border: 2px;
+  border: 3px;
   border-style: solid;
   border-radius: 50%;
   display: flex;
@@ -110,7 +111,7 @@ h1 {
 }
 
 .results {
-  font-size: 4vh;
+  font-size: 1.25vw;
   color: white;
   text-align: center;
   margin-top: 50px;
@@ -125,7 +126,7 @@ h1 {
 
 .play-again {
   font-family: "Audiowide", sans-serif;
-  font-size: 2.5vh;
+  font-size: 0.75vw;
   padding: 10px 15px;
   margin-top: 20px;
   margin-bottom: -45px;
