@@ -148,9 +148,16 @@ h1 {
 .choices button {
   height: 5.5vw;
   width: 5.5vw;
-  border: none;
   background: none;
+  padding: 2px 0 0 0;
   margin: 15px;
+  border: solid;
+  border-color: transparent;
+  border-radius: 50%;
+}
+
+.choices button:hover {
+  box-shadow: 0 0 3px 3px white;
 }
 
 .rock-img,
