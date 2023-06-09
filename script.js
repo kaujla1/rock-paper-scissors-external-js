@@ -162,7 +162,7 @@ playAgainButton.addEventListener("click", () => {
   location.reload(); //new version simply reloads page
 })
 
-/*Old version reset everything manually
+/*Old version resets everything manually
 playAgainButton.addEventListener("click", () => {
   playerScore.textContent = 0;
   computerScore.textContent = 0;
