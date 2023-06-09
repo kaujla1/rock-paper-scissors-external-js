@@ -98,6 +98,7 @@ h1 {
 }
 
 .click-here {
+  font-size: 0.75vw;
   color: white;
   padding: 1px 4px;
   margin-top: 65px;
@@ -107,7 +108,6 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 0.2s;
 }
 
 .results {
